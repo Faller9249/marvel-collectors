@@ -1,6 +1,11 @@
-import { HomeService } from './../../service/home.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { CharactersService } from '../../service/characters.service';
+import { ComicsService } from '../../service/comics.service';
+import { CreatorsService } from '../../service/creators.service';
+import { EventosService } from '../../service/eventos.service';
+import { SeriesService } from '../../service/series.service';
+import { StoriesService } from '../../service/stories.service';
 
 @Component({
   selector: 'app-tela-home',
@@ -8,25 +13,18 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./tela-home.component.scss']
 })
 export class TelaHomeComponent implements OnInit {
-  list: any;
-  min = Math.ceil(0);
-  max = Math.floor(100);
-  imagem: any = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
-
-  filtro = [
-    {
-      page: 'characters',
-      pageIndex: 'characters',
-      pageSize: 'characters',
-    },
-  ];
+  min = 0;
+  max = 100;
 
   constructor(
-    private serviceHome: HomeService,
+    private charactersService: CharactersService,
+    private comicsService: ComicsService,
+    private creatorsService: CreatorsService,
+    private eventosService: EventosService,
+    private seriesService: SeriesService,
+    private storiesService: StoriesService,
     private router: Router
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getByMarvel1();
@@ -35,139 +33,104 @@ export class TelaHomeComponent implements OnInit {
     this.getByMarvel4();
     this.getByMarvel5();
     this.getByMarvel6();
-
-  };
-
+  }
 
   getByMarvel1() {
-    this.serviceHome
-      .getApiCharacter(
-        this.filtro[0].pageIndex,
-        this.filtro[0].pageSize
-      )
-      .subscribe(
-        (data: any) => {
-          this.listCateg[0].item = data.data;
-          //console.log(this.list.results[this.listCateg[0].numb].thumbnail.path + '.' + this.list.results[this.listCateg[0].numb].thumbnail.extension)
-        },
-        (error) => {
-          // this.generic.openSnackBarError(error.error.message);
-          console.log('Não conecto');
-        }
-      );
-  };
+    this.charactersService.getCharacters(0, 100).subscribe(
+      (data: any) => {
+        this.listCateg[0].item = data;
+      },
+      (error) => {
+        console.log('Não conecto', error);
+      }
+    );
+  }
 
   getByMarvel2() {
-    this.serviceHome
-      .getApiComics(
-        this.filtro[0].pageIndex,
-        this.filtro[0].pageSize
-      )
-      .subscribe(
-        (data: any) => {
-          this.list = data.data;
-        },
-        (error) => {
-          // this.generic.openSnackBarError(error.error.message);
-          console.log('Não conecto');
-        }
-      );
-  };
+    this.comicsService.getComics(0, 100).subscribe(
+      (data: any) => {
+        this.listCateg[1].item = data;
+      },
+      (error) => {
+        console.log('Não conecto', error);
+      }
+    );
+  }
 
   getByMarvel3() {
-    this.serviceHome
-      .getApiCreators(
-        this.filtro[0].pageIndex,
-        this.filtro[0].pageSize
-      )
-      .subscribe(
-        (data: any) => {
-          this.list = data.data;
-        },
-        (error) => {
-          // this.generic.openSnackBarError(error.error.message);
-          console.log('Não conecto');
-        }
-      );
-  };
+    this.creatorsService.getCreators(0, 100).subscribe(
+      (data: any) => {
+        this.listCateg[2].item = data;
+      },
+      (error) => {
+        console.log('Não conecto', error);
+      }
+    );
+  }
 
   getByMarvel4() {
-    this.serviceHome
-      .getApiEventos(
-        this.filtro[0].pageIndex,
-        this.filtro[0].pageSize
-      )
-      .subscribe(
-        (data: any) => {
-          this.list = data.data;
-        },
-        (error) => {
-          // this.generic.openSnackBarError(error.error.message);
-          console.log('Não conecto');
-        }
-      );
-  };
+    this.eventosService.getEvents(0, 100).subscribe(
+      (data: any) => {
+        this.listCateg[3].item = data;
+      },
+      (error) => {
+        console.log('Não conecto', error);
+      }
+    );
+  }
 
   getByMarvel5() {
-    this.serviceHome
-      .getApiStories(
-        this.filtro[0].pageIndex,
-        this.filtro[0].pageSize
-      )
-      .subscribe(
-        (data: any) => {
-          this.list = data.data;
-        },
-        (error) => {
-          // this.generic.openSnackBarError(error.error.message);
-          console.log('Não conecto');
-        }
-      );
-  };
+    this.storiesService.getStories(0, 100).subscribe(
+      (data: any) => {
+        this.listCateg[5].item = data;
+      },
+      (error) => {
+        console.log('Não conecto', error);
+      }
+    );
+  }
 
   getByMarvel6() {
-    this.serviceHome
-      .getApiSeries(
-        this.filtro[0].pageIndex,
-        this.filtro[0].pageSize
-      )
-      .subscribe(
-        (data: any) => {
-          this.list = data.data;
-          console.log
-        },
-        (error) => {
-          // this.generic.openSnackBarError(error.error.message);
-          console.log('Não conecto');
-        }
-      );
-  };
+    this.seriesService.getSeries(0, 100).subscribe(
+      (data: any) => {
+        this.listCateg[4].item = data;
+      },
+      (error) => {
+        console.log('Não conecto', error);
+      }
+    );
+  }
 
   listCateg = [
     {
       type: 'Characters',
       numb: Math.floor(Math.random() * (this.max - this.min + 1)) + this.min,
       item: ''
-    },{
+    },
+    {
       type: 'Comics',
       numb: Math.floor(Math.random() * (this.max - this.min + 1)) + this.min,
       item: ''
-    },{
+    },
+    {
       type: 'Creators',
       numb: Math.floor(Math.random() * (this.max - this.min + 1)) + this.min,
       item: ''
-    },{
+    },
+    {
       type: 'Eventos',
       numb: Math.floor(Math.random() * (this.max - this.min + 1)) + this.min,
       item: ''
-    },{
+    },
+    {
       type: 'Series',
       numb: Math.floor(Math.random() * (this.max - this.min + 1)) + this.min,
       item: ''
-    },{
+    },
+    {
       type: 'Stories',
       numb: Math.floor(Math.random() * (this.max - this.min + 1)) + this.min,
       item: ''
     }
-  ]
+  ];
 }

@@ -3,42 +3,13 @@
     <div class="backgroundColor"></div>
     <img fxflex="100" id="backgroundImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Marvel_Logo.svg/1200px-Marvel_Logo.svg.png">
   </div>
-  <div fxFlex="25%" fxLayout="row warp" fxLayoutAlign="center center" fxLayoutGap="20">
-    <mat-card id="cardAvenger" fxLayout="column" fxLayoutAlign="center">
-      <img src="{{list.results[listCateg[0].numb].thumbnail.path}}/portrait_xlarge.{{list.results[listCateg[0].numb].thumbnail.extension}}"
-      style="border-bottom-right-radius: 12% 12%;
-      border-top-left-radius: 12% 12%;">
-      <span class="mat-title">{{listCateg[0].type}}</span>
-    </mat-card>
-    <mat-card id="cardAvenger" fxLayout="column" fxLayoutAlign="center">
-      <img src="{{list.results[listCateg[1].numb].thumbnail.path}}/portrait_xlarge.{{list.results[listCateg[1].numb].thumbnail.extension}}"
-      style="border-bottom-right-radius: 12% 12%;
-      border-top-left-radius: 12% 12%;">
-      <span class="mat-title">{{listCateg[1].type}}</span>
-    </mat-card>
-    <mat-card id="cardAvenger" fxLayout="column" fxLayoutAlign="center">
-      <img src="{{list.results[listCateg[2].numb].thumbnail.path}}/portrait_xlarge.{{list.results[listCateg[2].numb].thumbnail.extension}}"
-      style="border-bottom-right-radius: 12% 12%;
-      border-top-left-radius: 12% 12%;">
-      <span class="mat-title">{{listCateg[2].type}}</span>
-    </mat-card>
-    <mat-card id="cardAvenger" fxLayout="column" fxLayoutAlign="center">
-      <img src="{{list.results[listCateg[3].numb].thumbnail.path}}/portrait_xlarge.{{list.results[listCateg[3].numb].thumbnail.extension}}"
-      style="border-bottom-right-radius: 12% 12%;
-      border-top-left-radius: 12% 12%;">
-      <span class="mat-title">{{listCateg[3].type}}</span>
-    </mat-card>
-    <mat-card id="cardAvenger" fxLayout="column" fxLayoutAlign="center">
-      <img src="{{list.results[listCateg[4].numb].thumbnail.path}}/portrait_xlarge.{{list.results[listCateg[4].numb].thumbnail.extension}}"
-      style="border-bottom-right-radius: 12% 12%;
-      border-top-left-radius: 12% 12%;">
-      <span class="mat-title">{{listCateg[4].type}}</span>
-    </mat-card>
-    <mat-card id="cardAvenger" fxLayout="column" fxLayoutAlign="center">
-      <img src="{{list.results[listCateg[5].numb].thumbnail.path}}/portrait_xlarge.{{list.results[listCateg[5].numb].thumbnail.extension}}"
-      style="border-bottom-right-radius: 12% 12%;
-      border-top-left-radius: 12% 12%;">
-      <span class="mat-title">{{listCateg[5].type}}</span>
-    </mat-card>
+  <div fxFlex="25%" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <ng-container *ngFor="let categ of listCateg">
+      <mat-card id="cardAvenger" fxLayout="column" fxLayoutAlign="center" *ngIf="categ.item && categ.item[categ.numb]">
+        <img [src]="categ.item[categ.numb].thumbnail.path + '/portrait_xlarge.' + categ.item[categ.numb].thumbnail.extension"
+             style="border-bottom-right-radius: 12% 12%; border-top-left-radius: 12% 12%;">
+        <span class="mat-title">{{categ.type}}</span>
+      </mat-card>
+    </ng-container>
   </div>
 </div>

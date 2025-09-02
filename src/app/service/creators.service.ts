@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { MarvelApiService } from './marvel-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CreatorsService {
+export class CreatorsService extends MarvelApiService {
 
-  constructor() { }
+  constructor(http: HttpClient) {
+    super(http);
+  }
+
+  getCreators(pageIndex: number, pageSize: number) {
+    return this.get<any[]>('creators', pageIndex, pageSize);
+  }
 }
